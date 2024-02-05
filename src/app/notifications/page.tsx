@@ -1,7 +1,5 @@
 "use client";
 // Initialize the JS client
-import {stringify} from "querystring";
-
 import {createClient} from "@supabase/supabase-js";
 import {useEffect, useState} from "react";
 const supabase = createClient(
@@ -12,7 +10,13 @@ const supabase = createClient(
 export default function NotificationPage() {
   const [notifications, setNotifications] = useState<
     {id: number; message: string; amount: number}[]
-  >([]);
+  >([
+    {
+      id: 1,
+      message: "Gracias!",
+      amount: 1000,
+    },
+  ]);
 
   useEffect(() => {
     supabase
@@ -27,5 +31,26 @@ export default function NotificationPage() {
       .subscribe();
   }, []);
 
-  return <div>{JSON.stringify(notifications)}</div>;
+  useEffect(() => {
+    if (notifications.length) {
+      const timeout = setTimeout(() => {
+        setNotifications((notifications) => notifications.slice(1));
+      }, 5000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [notifications]);
+
+  if (!notifications.length) {
+    return null;
+  }
+
+  return (
+    <section className="rigth-4 absolute bottom-4 grid  items-center justify-center gap-2 rounded-md border bg-black p-4">
+      <p className="text-2xl font-bold">
+        {notifications[0].amount.toLocaleString("es-AR", {style: "currency", currency: "ARS"})},
+      </p>
+      <p>{notifications[0].message}</p>
+    </section>
+  );
 }

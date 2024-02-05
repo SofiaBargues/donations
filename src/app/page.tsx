@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import {MercadoPagoConfig, Preference} from "mercadopago";
 import {redirect} from "next/navigation";
 import {createClient} from "@supabase/supabase-js";
@@ -45,17 +46,17 @@ export default async function HomePage() {
   return (
     <section className="dark container m-auto grid min-h-screen grid-rows-[auto,1fr,auto] bg-background px-4 font-sans antialiased">
       <header className="text-xl font-bold leading-[4rem]">
-        <Link href="/">donations</Link>
+        <Link href="/">Donations</Link>
       </header>
       <main className="py-8">
         <section className="grid gap-12">
           <form action={donate} className=" m-auto grid max-w-96 gap-8 border p-6">
             <Label className="grid gap-2">
-              <span>Valor</span>
+              <span>Amount</span>
               <Input name="amount" type="number" />
             </Label>
             <Label className="grid gap-2">
-              <span>Tu mensaje en la donacion</span>
+              <span>Your message</span>
               <Textarea name="message" />
             </Label>
             <Button type="submit">Send</Button>
@@ -88,7 +89,7 @@ export default async function HomePage() {
         </section>
       </main>
       <footer className="text-center leading-[4rem] opacity-70">
-        © {new Date().getFullYear()} donations
+        © {new Date().getFullYear()} Donations
       </footer>
     </section>
   );
